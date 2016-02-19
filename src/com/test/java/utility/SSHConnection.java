@@ -9,32 +9,10 @@ import com.jcraft.jsch.Session;
  */
 public class SSHConnection {
 	private static SSHConnection sshConnection;
-	private static Session session;
-	private String server;
-	private String userName;
-	private String passWord;
-
-	/* This method need to implement with global properties files */
-	
-	protected SSHConnection() {
-		server = server;
-		userName = userName;
-		passWord = passWord;
-	}
+	private static Session session;	
 
 	protected SSHConnection(final String server, final String userName, final String passWord) {
 		connectToServer(server, userName, passWord);
-	}
-
-	public static SSHConnection getInstance() {
-		if (sshConnection == null) {
-			synchronized (SSHConnection.class) {
-				if (sshConnection == null) {
-					return sshConnection = new SSHConnection();
-				}
-			}
-		}
-		return sshConnection;
 	}
 
 	public static SSHConnection getInstance(final String server, final String userName, final String passWord) {
@@ -70,13 +48,6 @@ public class SSHConnection {
 	public Session getSSHConnection(final String server, final String userName, final String passWord) {
 		if (!session.isConnected()) {
 			SSHConnection.getInstance(server, userName, passWord);
-		}
-		return session;
-	}
-
-	public Session getSSHConnection() {
-		if (!session.isConnected()) {
-			SSHConnection.getInstance();
 		}
 		return session;
 	}
